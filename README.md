@@ -9,3 +9,4 @@ Each of these storage systems should be able to:
 
 Open drawio file on the following website:
 https://app.diagrams.net/
+Then open the diagram file by logging in with GitHub and opening it up from the repo.
