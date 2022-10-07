@@ -10,3 +10,6 @@ Each of these storage systems should be able to:
 Open drawio file on the following website:
 https://app.diagrams.net/
 Then open the diagram file by logging in with GitHub and opening it up from the repo.
+
+Link to initial repo before migration to organization repos:
+https://github.com/samina-bibi/DBAnalytics_ver03
