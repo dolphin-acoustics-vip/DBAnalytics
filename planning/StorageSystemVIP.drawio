@@ -1,93 +1,146 @@
-<mxfile host="app.diagrams.net" modified="2022-10-07T09:42:13.653Z" agent="5.0 (Windows)" etag="5boz6mSsxLm4I8oEvo31" version="20.4.0" type="github">
+<mxfile host="app.diagrams.net" modified="2022-10-07T17:41:45.823Z" agent="5.0 (Windows)" etag="nTP61VLSuPOS82IQ5WfZ" version="20.4.0" type="github">
   <diagram id="qogbHMF2WECLjnla78s_" name="Page-1">
-    <mxGraphModel dx="2249" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2188" dy="1188" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="lTb2LRMEJDSldLxrj2Hd-1" target="lTb2LRMEJDSldLxrj2Hd-2" edge="1">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-2" target="MQyHVBvRv1z745Ovl4bt-8">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="lTb2LRMEJDSldLxrj2Hd-1" target="lTb2LRMEJDSldLxrj2Hd-3" edge="1">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-2" target="MQyHVBvRv1z745Ovl4bt-9">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="lTb2LRMEJDSldLxrj2Hd-1" target="lTb2LRMEJDSldLxrj2Hd-4" edge="1">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-2" target="MQyHVBvRv1z745Ovl4bt-12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-1" value="Storage System" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-          <mxGeometry x="354" y="50" width="120" height="60" as="geometry" />
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-2" target="MQyHVBvRv1z745Ovl4bt-16">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lTb2LRMEJDSldLxrj2Hd-2" target="JANyyQ0dnzIHtmtHLsAN-2">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-2" value="Generate random data for one data point" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="368" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-4" target="MQyHVBvRv1z745Ovl4bt-2">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-40" y="350" as="targetPoint" />
+            <mxPoint x="428" y="460" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lTb2LRMEJDSldLxrj2Hd-2" target="JANyyQ0dnzIHtmtHLsAN-4">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="130" y="340" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-4" value="Generate an empty SQL database for an hours worth of data." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="288" y="400" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-2" value="Create databases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-          <mxGeometry x="-10" y="200" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="lTb2LRMEJDSldLxrj2Hd-3" target="JANyyQ0dnzIHtmtHLsAN-5">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-5" target="MQyHVBvRv1z745Ovl4bt-2">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lTb2LRMEJDSldLxrj2Hd-3" target="JANyyQ0dnzIHtmtHLsAN-8">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="520" y="340" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-5" value="Generate an empty file for an output stream to write to." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="450" y="400" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-3" value="Populate databases" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-          <mxGeometry x="354" y="200" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lTb2LRMEJDSldLxrj2Hd-4" target="JANyyQ0dnzIHtmtHLsAN-11">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="690" y="520" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="lTb2LRMEJDSldLxrj2Hd-4" target="JANyyQ0dnzIHtmtHLsAN-20">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="887" y="310" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="lTb2LRMEJDSldLxrj2Hd-4" value="Report on databases (and clean)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
-          <mxGeometry x="740" y="210" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-2" value="SQLite database" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="-80" y="320" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-4" value="FileOutputStream" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="60" y="320" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" edge="1" parent="1" source="JANyyQ0dnzIHtmtHLsAN-5" target="JANyyQ0dnzIHtmtHLsAN-12">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-45" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-8" target="MQyHVBvRv1z745Ovl4bt-31">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-5" value="Create tables (SQLite)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="290" y="310" width="120" height="60" as="geometry" />
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-8" value="Store in SQL database" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="288" y="660" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-8" value="&lt;i&gt;Read in data (?)&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="420" y="310" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" edge="1" parent="1" source="JANyyQ0dnzIHtmtHLsAN-11" target="JANyyQ0dnzIHtmtHLsAN-14">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-9" target="MQyHVBvRv1z745Ovl4bt-31">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-11" value="Get read times" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="620" y="310" width="120" height="60" as="geometry" />
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-9" value="Write to file with output stream (along with buffer)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="450" y="660" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-12" value="Get write times" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="290" y="400" width="120" height="60" as="geometry" />
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-12" value="Temporary store for this, which will be deleted once added into both storage systems." style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="578" y="535" width="140" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" edge="1" parent="1" source="JANyyQ0dnzIHtmtHLsAN-14" target="JANyyQ0dnzIHtmtHLsAN-16">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-16" value="Get the exact size of this file." style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="168" y="540" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-22" target="MQyHVBvRv1z745Ovl4bt-29">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-14" value="Delete table" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-22" value="Read in each data point stored in the SQL database" style="whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="288" y="870" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-51" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-24" target="MQyHVBvRv1z745Ovl4bt-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontColor=#333333;strokeColor=#FF3333;dashed=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="150" y="520" width="580" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-25" value="Will be done in a class that creates a DataPoint object." style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FF3333;strokeWidth=1;fillColor=#f8cecc;dashed=1;" vertex="1" parent="1">
           <mxGeometry x="620" y="400" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-16" value="Finally (after reading all tables), delete database" style="whiteSpace=wrap;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
-          <mxGeometry x="620" y="490" width="120" height="60" as="geometry" />
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-26" value="Storage Systems Analysis" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=1;fillColor=default;" vertex="1" parent="1">
+          <mxGeometry x="120" y="20" width="600" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="JANyyQ0dnzIHtmtHLsAN-20" value="&lt;i&gt;(Not sure what to do for the Java methods only side)&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
-          <mxGeometry x="827" y="310" width="120" height="60" as="geometry" />
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-27" target="MQyHVBvRv1z745Ovl4bt-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-27" value="Read in each data point stored in the file." style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="870" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;strokeColor=#B266FF;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-29" target="MQyHVBvRv1z745Ovl4bt-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-60" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-29" target="MQyHVBvRv1z745Ovl4bt-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-29" value="Get start time of the process, and end time" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="368" y="970" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-31" target="MQyHVBvRv1z745Ovl4bt-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-31" target="MQyHVBvRv1z745Ovl4bt-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-40" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;strokeColor=#B266FF;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-31" target="MQyHVBvRv1z745Ovl4bt-39">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-31" value="Get start time of the process, and end time" style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="368" y="770" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-39" target="MQyHVBvRv1z745Ovl4bt-42">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="730" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="780" y="905" />
+              <mxPoint x="780" y="760" />
+              <mxPoint x="730" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-39" value="Will be done in the abstract class that the storage systems will extend from." style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#B266FF;strokeWidth=1;fillColor=#E1D5E7;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="870" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-42" value="These methods may be overridden depending on whether there is an inbuilt SQL query for these actions." style="whiteSpace=wrap;html=1;strokeColor=#23445d;rounded=1;strokeWidth=1;fillColor=#bac8d3;" vertex="1" parent="1">
+          <mxGeometry x="660" y="645" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-44" target="MQyHVBvRv1z745Ovl4bt-52">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-44" target="MQyHVBvRv1z745Ovl4bt-53">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-44" value="Storage System Abstract class" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;strokeWidth=1;fillColor=#dae8fc;" vertex="1" parent="1">
+          <mxGeometry x="368" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-49" target="MQyHVBvRv1z745Ovl4bt-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-49" value="Storage System Interface" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6c8ebf;strokeWidth=1;fillColor=#dae8fc;" vertex="1" parent="1">
+          <mxGeometry x="368" y="110" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-61" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-52" target="MQyHVBvRv1z745Ovl4bt-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-52" value="SQLDatabase Class" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#d6b656;strokeWidth=1;fillColor=#fff2cc;" vertex="1" parent="1">
+          <mxGeometry x="288" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-62" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#000000;" edge="1" parent="1" source="MQyHVBvRv1z745Ovl4bt-53" target="MQyHVBvRv1z745Ovl4bt-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-53" value="FileOutputDatabase Class" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#82b366;strokeWidth=1;fillColor=#d5e8d4;" vertex="1" parent="1">
+          <mxGeometry x="450" y="310" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="MQyHVBvRv1z745Ovl4bt-59" value="Delete databases." style="whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="368" y="1050" width="120" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
