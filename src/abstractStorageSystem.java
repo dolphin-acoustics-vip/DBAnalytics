@@ -1,6 +1,9 @@
 package src;
-public class abstractStorageSystem implements IStorageSystem {
+public class AbstractStorageSystem implements IStorageSystem {
 
+    /**
+     * This method will create the storage system.
+     */
     @Override
     public void prepareStorage() {
         // TODO Auto-generated method stub
@@ -16,6 +19,8 @@ public class abstractStorageSystem implements IStorageSystem {
     @Override
     public void store(byte[] data) {
         // TODO Auto-generated method stub
+
+
         
     }
 

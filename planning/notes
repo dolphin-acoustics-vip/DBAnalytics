@@ -9,6 +9,8 @@ waveform data
                 time, amplitude, channels, detector, binary blob
                 start time, end time (along side time stamp)
                 random float for amplitude
+        
+        Using getters and setters if i want to be able to have concrete things (such as the channel recorded, or the ship)
 
         blobs of data - random numbers - (could test just 0s later)
             100 bytes
@@ -28,3 +30,12 @@ generate around 10000 - 100000 data rows
 inserting in SQL
     parametised cursor
     insert statements
+
+When getting the read/write times of different files from the different storage systems, write these to a separate database for easy viewing.
+
+Are the waveform files stored in separate files for each period of time?
+
+find out the time it takes to get the files for specific start and end times
+    as an extension, get the ones recorded on different channels
+        (would things that are recorded in different channels be stored in the same data row? I would assume not)
+        So if the duration of the sound sample is longer than the actual length of each sample, then have to output files according to what channels they come from.

@@ -94,6 +94,15 @@ public class SQLiteStorageSystem implements IStorageSystem {
     }
 
     /**
+     * This will populate the SQLite database with however many data rows.
+     */
+    public void populate(int rows) {
+        for (int i = 0; i < rows; i++) {
+            store(null);
+        }
+    }
+
+    /**
      * This method will store one data file as a table in the SQLDatabase file.
      * 
      * @param data
@@ -137,8 +146,6 @@ public class SQLiteStorageSystem implements IStorageSystem {
      */
     @Override
     public void reportAnalysis() {
-        // TODO Auto-generated method stub
-
         Connection conn = null;
         String dbURL = "jdbc:sqlite" + databaseName + ".db";
 
