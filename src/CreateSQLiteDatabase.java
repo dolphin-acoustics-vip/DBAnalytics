@@ -56,7 +56,12 @@ public class CreateSQLiteDatabase {
         } else {
             System.out.println("Cannot connect to database.");
         }
-
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void createTables() {
@@ -82,6 +87,7 @@ public class CreateSQLiteDatabase {
                 stm.execute(statements[i]);
             }
 
+            conn.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

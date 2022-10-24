@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS speeds;
+#
+CREATE TABLE speeds (
+    type_of_db TEXT, 
+    start_time TEXT, 
+    end_time TEXT
+);
