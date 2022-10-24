@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 
 import javax.sql.rowset.serial.SerialBlob;
 
@@ -124,16 +126,23 @@ public class SQLiteStorageSystem implements IStorageSystem {
 
         try {
             conn = DriverManager.getConnection(speedsURL);
-            long start = System.nanoTime();
-            store(null);
-            long end = System.nanoTime();
 
-            String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time) VALUES (?, ?, ?)";
+            Instant s = Instant.now();
+            store(null);
+            Instant e = Instant.now();
+
+
+
+            Duration duration = Duration.between(s, e);
+
+            String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration) VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement insertSpeedOfQuery = conn.prepareStatement(insertIntoSpeeds);
             insertSpeedOfQuery.setString(1, "SQLite");
-            insertSpeedOfQuery.setString(2, String.valueOf(start));
-            insertSpeedOfQuery.setString(3, String.valueOf(end));
+            insertSpeedOfQuery.setString(2, String.valueOf(s));
+            insertSpeedOfQuery.setString(3, String.valueOf(e));
+            insertSpeedOfQuery.setString(4, "Inserting");
+            insertSpeedOfQuery.setString(5, String.valueOf(duration));
 
             insertSpeedOfQuery.execute();
 
