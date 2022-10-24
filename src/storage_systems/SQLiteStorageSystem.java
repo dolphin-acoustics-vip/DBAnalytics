@@ -108,7 +108,6 @@ public class SQLiteStorageSystem implements IStorageSystem {
     @Override
     public void closeStorage() {
         File database = new File(databaseName + ".db");
-
         if (database.delete()) {
             System.out.println("Clean up complete.");
         } else {
@@ -131,20 +130,18 @@ public class SQLiteStorageSystem implements IStorageSystem {
             store(null);
             Instant e = Instant.now();
 
-
-
             Duration duration = Duration.between(s, e);
 
             String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration) VALUES (?, ?, ?, ?, ?)";
 
-            PreparedStatement insertSpeedOfQuery = conn.prepareStatement(insertIntoSpeeds);
-            insertSpeedOfQuery.setString(1, "SQLite");
-            insertSpeedOfQuery.setString(2, String.valueOf(s));
-            insertSpeedOfQuery.setString(3, String.valueOf(e));
-            insertSpeedOfQuery.setString(4, "Inserting");
-            insertSpeedOfQuery.setString(5, String.valueOf(duration));
+            PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
+            speedOfInsert.setString(1, "SQLite");
+            speedOfInsert.setString(2, String.valueOf(s));
+            speedOfInsert.setString(3, String.valueOf(e));
+            speedOfInsert.setString(4, "Inserting");
+            speedOfInsert.setString(5, String.valueOf(duration));
 
-            insertSpeedOfQuery.execute();
+            speedOfInsert.execute();
 
             conn.close();
         } catch (SQLException e) {
