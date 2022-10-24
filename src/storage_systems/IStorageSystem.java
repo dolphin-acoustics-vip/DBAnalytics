@@ -1,4 +1,4 @@
-package src;
+package src.storage_systems;
 /**
  * This is the interface for either a SQL database structure, or a structure using in built Java reading and writing methods.
  */

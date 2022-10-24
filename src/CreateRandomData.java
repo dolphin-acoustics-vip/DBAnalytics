@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.ZoneOffset;
+import java.util.Random;
 
 public class CreateRandomData {
 
@@ -92,30 +93,42 @@ public class CreateRandomData {
     public void setWaveformData(byte[] waveformData) {
         this.waveformData = waveformData;
     }
-    
-    CreateRandomData(int blobSize) {
 
-        shipNames = new String[] {"Ship 1", "Ship 2", "Ship 3", "Ship 4", "Ship 5"};
+    public CreateRandomData(int blobSize) {
+
+        Random rand = new Random();
+
+        shipNames = new String[] { "Ship 1", "Ship 2", "Ship 3", "Ship 4", "Ship 5" };
+        int randomShip = rand.nextInt(shipNames.length);
+        setShipName(shipNames[randomShip]);
+
+        setChannel(String.valueOf(rand.nextInt(12) + 1));
 
         /**
          * https://www.baeldung.com/java-random-dates
          * tried 3.1 - didn't work
          */
-        int randomYear = (int) Math.random() * (2022 - 1980);
-        
-        int randomMonthNo = (int) Math.random() * (12 - 1);
+        int minYear = 1980;
+        int maxYear = 2022;
+        int randomYear = (int) Math.floor(Math.random() * (maxYear - minYear + 1) + minYear);
 
-        LocalDate randomDate = LocalDate.of(2022, 2, 15);
+        int randomMonth = rand.nextInt(12) + 1;
+
+        int randomDay;
+        if (randomMonth == 2 && randomYear % 4 != 0) {
+            randomDay = rand.nextInt(29) + 1;
+        } else if (randomMonth == 2 && randomYear % 4 == 0) {
+            randomDay = rand.nextInt(28) + 1;
+        } else if (randomMonth == 9 || randomMonth == 4 || randomMonth == 6 || randomMonth == 11) {
+            randomDay = rand.nextInt(30) + 1;
+        } else {
+            randomDay = rand.nextInt(31) + 1;
+        }
+
+        LocalDate randomDate = LocalDate.of(randomYear, randomMonth, randomDay);
         setDateRecorded(randomDate);
 
-        setChannel(String.valueOf((int) Math.random() * (12 - 1)));
-
-        int randomShip = (int) Math.random() * (shipNames.length - 1);
-        setShipName(shipNames[randomShip]);
-
         // Add this time onto the startRecordTime
-        // Is between 1nanosec and 5secs
-        //long duration = (long) Math.random() * (100 - 1);
         long duration = 5;
         setDurationOfWaveformSound(duration);
 
@@ -123,26 +136,25 @@ public class CreateRandomData {
          * https://stackoverflow.com/questions/14771845/generating-random-date-time-in-java-joda-time
          */
 
-         /**
-          * Creating random start and end recording time.
-          */
-        int randomHour = (int) Math.random() * (24 - 1);
-        int randomMin = (int) Math.random() * (60 - 1);
-        int randomSec = (int) Math.random() * (60 - 1);
-        int randomNanoSec = (int) Math.random() * (1000000 - 1);
+        /**
+         * Creating random start and end recording time.
+         */
+        int randomHour = rand.nextInt(24);
+        int randomMin = rand.nextInt(60);
+        int randomSec = rand.nextInt(60);
+        int randomNanoSec = rand.nextInt(1000);
         LocalDateTime randomStartTime = dateRecorded.atTime(randomHour, randomMin, randomSec, randomNanoSec);
 
         setStartRecordTime(randomStartTime);
-        setEndRecordTime(getStartRecordTime().plusNanos(duration));
+        setEndRecordTime(getStartRecordTime().plusSeconds(duration));
 
         Timestamp startTS = new Timestamp(randomStartTime.toEpochSecond(ZoneOffset.UTC));
         setStartTimestamp(startTS);
         Timestamp endTS = new Timestamp(randomStartTime.plusNanos(duration).toEpochSecond(ZoneOffset.UTC));
         setEndTimestamp(endTS);
 
-
-
-        /** How to set a random value for the byte array
+        /**
+         * How to set a random value for the byte array
          * https://stackoverflow.com/questions/5683206/how-to-create-an-array-of-20-random-bytes
          */
         byte[] wvData = new byte[blobSize];
@@ -150,7 +162,6 @@ public class CreateRandomData {
             SecureRandom.getInstanceStrong().nextBytes(wvData);
             setWaveformData(wvData);
         } catch (NoSuchAlgorithmException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -164,12 +175,11 @@ public class CreateRandomData {
 
         /**
          * - CHANNEL RECORDED ON
-         *  - SHIP RECORDED ON (NULL OTHERWISSE)
-         *  - DATE RECORDED
-         *  - TIME RECORDED
-         *  - LENGTH RECORDED
+         * - SHIP RECORDED ON (NULL OTHERWISSE)
+         * - DATE RECORDED
+         * - TIME RECORDED
+         * - LENGTH RECORDED
          */
-
 
         return "";
     }

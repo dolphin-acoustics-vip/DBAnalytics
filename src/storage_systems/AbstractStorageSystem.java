@@ -1,4 +1,4 @@
-package src;
+package src.storage_systems;
 public class AbstractStorageSystem implements IStorageSystem {
 
     /**
