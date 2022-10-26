@@ -1,7 +1,6 @@
 package src.storage_systems;
 
 import java.io.File;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,24 +8,25 @@ import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
 
-import javax.sql.rowset.serial.SerialBlob;
-
 import src.CreateRandomData;
 import src.CreateSQLiteDatabase;
 
 public class SQLiteStorageSystem implements IStorageSystem {
 
     private String databaseName, databaseURL, speedsURL;
+    private int blobSize;
+    private long previousInsertionTime;
 
     /**
      * Constrctor for making a whole storage system.
      * Only need one SQLite database, and put files into there.
      */
-    public SQLiteStorageSystem(String dbName, int rows) {
+    public SQLiteStorageSystem(String dbName, int rows, int bSize) {
         speedsURL = "jdbc:sqlite:speedsOfSQLDatabase.db";
         File script = new File("scripts/databaseAnalysis.txt");
         new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
 
+        blobSize = bSize;
         databaseName = dbName;
         databaseURL = "jdbc:sqlite:" + databaseName + ".db";
         prepareStorage();
@@ -51,8 +51,19 @@ public class SQLiteStorageSystem implements IStorageSystem {
      * This will populate the SQLite database with however many data rows.
      */
     public void populate(int rows) {
-        for (int i = 0; i < rows; i++) {
-            reportAnalysis();
+
+        // Turn off autocommit and loop through to populate the table
+
+        Connection conn;
+        previousInsertionTime = 0;
+        try {
+            conn = DriverManager.getConnection(databaseURL);
+            for (int i = 0; i < rows; i++) {
+                reportAnalysis();
+            }
+            conn.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -70,23 +81,18 @@ public class SQLiteStorageSystem implements IStorageSystem {
             connection = DriverManager.getConnection(databaseURL);
 
             // Put in the different values from the random data point object.
-            CreateRandomData randomDataPoint = new CreateRandomData(50);
+            CreateRandomData randomDataPoint = new CreateRandomData(blobSize);
             StringBuilder sb = new StringBuilder();
             sb.append(
                     "INSERT INTO RandomData (time_recorded, ship_id, data, duration, channel_recorded) VALUES (?, ?, ?, ?, ?)");
-            // time recorded, ship id, waveform data, start time, end time, duration,
-            // channel recorded
             PreparedStatement insertDataRowCommand = connection.prepareStatement(sb.toString());
-
-            // Convert bytes[] to blob
-
-            Blob dataBlob = new SerialBlob(randomDataPoint.getWaveformData());
 
             insertDataRowCommand.setString(1, String.valueOf(randomDataPoint.getDateRecorded())); // time recorded
             insertDataRowCommand.setString(2, String.valueOf(randomDataPoint.getShipName())); // ship id
             insertDataRowCommand.setBytes(3, randomDataPoint.getWaveformData()); // waveform data
             insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
             insertDataRowCommand.setString(5, String.valueOf(randomDataPoint.getChannel())); // channel recorded
+            insertDataRowCommand.setLong(6, previousInsertionTime);
 
             insertDataRowCommand.execute();
 
