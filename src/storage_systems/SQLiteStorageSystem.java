@@ -22,7 +22,7 @@ public class SQLiteStorageSystem implements IStorageSystem {
      * Constrctor for making a whole storage system.
      * Only need one SQLite database, and put files into there.
      */
-    public SQLiteStorageSystem(String dbName) {
+    public SQLiteStorageSystem(String dbName, int rows) {
         speedsURL = "jdbc:sqlite:speedsOfSQLDatabase.db";
         File script = new File("scripts/databaseAnalysis.txt");
         new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
@@ -30,8 +30,8 @@ public class SQLiteStorageSystem implements IStorageSystem {
         databaseName = dbName;
         databaseURL = "jdbc:sqlite:" + databaseName + ".db";
         prepareStorage();
-        populate(5);
-        closeStorage();
+        populate(rows);
+        // closeStorage();
     }
 
     /**
@@ -70,10 +70,10 @@ public class SQLiteStorageSystem implements IStorageSystem {
             connection = DriverManager.getConnection(databaseURL);
 
             // Put in the different values from the random data point object.
-            CreateRandomData randomDataPoint = new CreateRandomData(20);
+            CreateRandomData randomDataPoint = new CreateRandomData(50);
             StringBuilder sb = new StringBuilder();
             sb.append(
-                    "INSERT INTO RandomData (time_recorded, ship_id, data, start_time, end_time, duration, channel_recorded) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO RandomData (time_recorded, ship_id, data, duration, channel_recorded) VALUES (?, ?, ?, ?, ?)");
             // time recorded, ship id, waveform data, start time, end time, duration,
             // channel recorded
             PreparedStatement insertDataRowCommand = connection.prepareStatement(sb.toString());
@@ -84,13 +84,13 @@ public class SQLiteStorageSystem implements IStorageSystem {
 
             insertDataRowCommand.setString(1, String.valueOf(randomDataPoint.getDateRecorded())); // time recorded
             insertDataRowCommand.setString(2, String.valueOf(randomDataPoint.getShipName())); // ship id
-            insertDataRowCommand.setString(3, String.valueOf(randomDataPoint.getWaveformData())); // waveform data
-            insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getStartRecordTime())); // start time
-            insertDataRowCommand.setString(5, String.valueOf(randomDataPoint.getEndRecordTime())); // end time
-            insertDataRowCommand.setString(6, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
-            insertDataRowCommand.setString(7, String.valueOf(randomDataPoint.getChannel())); // channel recorded
+            insertDataRowCommand.setBytes(3, randomDataPoint.getWaveformData()); // waveform data
+            insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
+            insertDataRowCommand.setString(5, String.valueOf(randomDataPoint.getChannel())); // channel recorded
 
             insertDataRowCommand.execute();
+
+            // TODO turn off autocommit and have one overarching connection
 
             connection.close();
 

@@ -2,44 +2,23 @@ package src;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.Random;
 
 public class CreateRandomData {
 
     private String shipName, channel;
-    private LocalDateTime startRecordTime, endRecordTime;
-    private LocalDate dateRecorded;
+    private LocalDateTime dateRecorded;
     private long durationOfWaveformSound;
     private byte[] waveformData;
-    private Timestamp startTimestamp, endTimestamp;
-
-    public Timestamp getStartTimestamp() {
-        return startTimestamp;
-    }
-
-    public void setStartTimestamp(Timestamp startTimestamp) {
-        this.startTimestamp = startTimestamp;
-    }
-
-    public Timestamp getEndTimestamp() {
-        return endTimestamp;
-    }
-
-    public void setEndTimestamp(Timestamp endTimestamp) {
-        this.endTimestamp = endTimestamp;
-    }
-
     private String[] shipNames;
 
-    public LocalDate getDateRecorded() {
+    public LocalDateTime getDateRecorded() {
         return dateRecorded;
     }
 
-    public void setDateRecorded(LocalDate dateRecorded) {
+    public void setDateRecorded(LocalDateTime dateRecorded) {
         this.dateRecorded = dateRecorded;
     }
 
@@ -57,22 +36,6 @@ public class CreateRandomData {
 
     public void setChannel(String channel) {
         this.channel = channel;
-    }
-
-    public LocalDateTime getStartRecordTime() {
-        return startRecordTime;
-    }
-
-    public void setStartRecordTime(LocalDateTime startRecordTime) {
-        this.startRecordTime = startRecordTime;
-    }
-
-    public LocalDateTime getEndRecordTime() {
-        return endRecordTime;
-    }
-
-    public void setEndRecordTime(LocalDateTime endRecordTime) {
-        this.endRecordTime = endRecordTime;
     }
 
     public long getDurationOfWaveformSound() {
@@ -101,6 +64,10 @@ public class CreateRandomData {
 
         setChannel(String.valueOf(rand.nextInt(12) + 1));
 
+        // Add this time onto the startRecordTime
+        long duration = 5;
+        setDurationOfWaveformSound(duration);
+
         /**
          * https://www.baeldung.com/java-random-dates
          * tried 3.1 - didn't work
@@ -112,9 +79,9 @@ public class CreateRandomData {
         int randomMonth = rand.nextInt(12) + 1;
 
         int randomDay;
-        if (randomMonth == 2 && randomYear % 4 != 0) {
+        if (randomMonth == 2 && randomYear % 4 == 0) {
             randomDay = rand.nextInt(29) + 1;
-        } else if (randomMonth == 2 && randomYear % 4 == 0) {
+        } else if (randomMonth == 2 && randomYear % 4 != 0) {
             randomDay = rand.nextInt(28) + 1;
         } else if (randomMonth == 9 || randomMonth == 4 || randomMonth == 6 || randomMonth == 11) {
             randomDay = rand.nextInt(30) + 1;
@@ -123,11 +90,6 @@ public class CreateRandomData {
         }
 
         LocalDate randomDate = LocalDate.of(randomYear, randomMonth, randomDay);
-        setDateRecorded(randomDate);
-
-        // Add this time onto the startRecordTime
-        long duration = 5;
-        setDurationOfWaveformSound(duration);
 
         /**
          * https://stackoverflow.com/questions/14771845/generating-random-date-time-in-java-joda-time
@@ -140,15 +102,9 @@ public class CreateRandomData {
         int randomMin = rand.nextInt(60);
         int randomSec = rand.nextInt(60);
         int randomNanoSec = rand.nextInt(1000);
-        LocalDateTime randomStartTime = dateRecorded.atTime(randomHour, randomMin, randomSec, randomNanoSec);
+        LocalDateTime randomStartTime = randomDate.atTime(randomHour, randomMin, randomSec, randomNanoSec);
 
-        setStartRecordTime(randomStartTime);
-        setEndRecordTime(getStartRecordTime().plusSeconds(duration));
-
-        Timestamp startTS = new Timestamp(randomStartTime.toEpochSecond(ZoneOffset.UTC));
-        setStartTimestamp(startTS);
-        Timestamp endTS = new Timestamp(randomStartTime.plusNanos(duration).toEpochSecond(ZoneOffset.UTC));
-        setEndTimestamp(endTS);
+        setDateRecorded(randomStartTime);
 
         /**
          * How to set a random value for the byte array

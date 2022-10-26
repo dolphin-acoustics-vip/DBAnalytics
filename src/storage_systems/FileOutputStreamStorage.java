@@ -1,5 +1,9 @@
 package src.storage_systems;
 
+import java.io.File;
+
+import src.CreateSQLiteDatabase;
+
 /**
  * Testing how fast it is to read data that was written directly with
  * FileOutputStream.
@@ -9,8 +13,21 @@ package src.storage_systems;
  * 
  * 
  * There would be a lot of blobs to read through, these blobs are the waveform data itself.
+ * 
+ * blocks of data in one file
  */
 public class FileOutputStreamStorage implements IStorageSystem {
+
+    private String speedsURL;
+
+    FileOutputStreamStorage() {
+        speedsURL = "jdbc:sqlite:speedsOfSQLDatabase.db";
+        File script = new File("scripts/databaseAnalysis.txt");
+        new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
+
+
+        
+    }
 
     @Override
     public void prepareStorage() {
