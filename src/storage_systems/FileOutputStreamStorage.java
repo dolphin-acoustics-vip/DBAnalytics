@@ -1,7 +1,17 @@
 package src.storage_systems;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.Duration;
+import java.time.Instant;
 
+import src.CreateRandomData;
 import src.CreateSQLiteDatabase;
 
 /**
@@ -12,49 +22,101 @@ import src.CreateSQLiteDatabase;
  * SQLite database, where you can quickly get a specific time of recording.
  * 
  * 
- * There would be a lot of blobs to read through, these blobs are the waveform data itself.
+ * There would be a lot of blobs to read through, these blobs are the waveform
+ * data itself.
  * 
  * blocks of data in one file
  */
 public class FileOutputStreamStorage implements IStorageSystem {
 
     private String speedsURL;
+    private int blobSize, blocks;
+    private File storage;
+    private String fileName;
 
-    FileOutputStreamStorage() {
-        speedsURL = "jdbc:sqlite:speedsOfSQLDatabase.db";
+    public FileOutputStreamStorage(int b, int bs) {
+        blobSize = bs;
+        blocks = b;
+
+        speedsURL = "jdbc:sqlite:speedsOfFileOutputDatabase.db";
         File script = new File("scripts/databaseAnalysis.txt");
-        new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
+        new CreateSQLiteDatabase("speedsOfFileOutputDatabase", script);
 
+        prepareStorage();
 
-        
+        closeStorage();
     }
 
     @Override
     public void prepareStorage() {
-        // TODO Auto-generated method stub
 
-        /**
-         * Seeing how fast it is to read data from different files to get different
-         * times.
-         */
+        fileName = "fileStorageSystem.txt";
+        File storage = new File(fileName);
+        try {
+            storage.createNewFile();
+            reportAnalysis();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void store(byte[] data) {
-        // TODO Auto-generated method stub
+
+        try {
+            FileOutputStream fStream = new FileOutputStream(fileName, true);
+            fStream.write(data);
+            fStream.write("/n".getBytes());
+            fStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void closeStorage() {
-        // TODO Auto-generated method stub
+        storage.delete();
 
     }
 
     @Override
     public void reportAnalysis() {
-        // TODO Auto-generated method stub
+
+        for (int i = 0; i < blocks; i++) {
+            Connection conn = null;
+
+            try {
+                conn = DriverManager.getConnection(speedsURL);
+
+                CreateRandomData rd = new CreateRandomData(blobSize);
+                byte[] data = rd.getWaveformData();
+
+                Instant s = Instant.now();
+                store(data);
+                Instant e = Instant.now();
+
+                Duration duration = Duration.between(s, e);
+
+                String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration) VALUES (?, ?, ?, ?, ?)";
+
+                PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
+                speedOfInsert.setString(1, "FileOutputStream");
+                speedOfInsert.setString(2, String.valueOf(s));
+                speedOfInsert.setString(3, String.valueOf(e));
+                speedOfInsert.setString(4, "Inserting");
+                speedOfInsert.setString(5, String.valueOf(duration));
+
+                speedOfInsert.execute();
+
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 

@@ -31,7 +31,7 @@ public class SQLiteStorageSystem implements IStorageSystem {
         databaseURL = "jdbc:sqlite:" + databaseName + ".db";
         prepareStorage();
         populate(rows);
-        // closeStorage();
+        closeStorage();
     }
 
     /**
@@ -92,7 +92,7 @@ public class SQLiteStorageSystem implements IStorageSystem {
             insertDataRowCommand.setBytes(3, randomDataPoint.getWaveformData()); // waveform data
             insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
             insertDataRowCommand.setString(5, String.valueOf(randomDataPoint.getChannel())); // channel recorded
-            insertDataRowCommand.setLong(6, previousInsertionTime);
+            // insertDataRowCommand.setLong(6, previousInsertionTime);
 
             insertDataRowCommand.execute();
 
