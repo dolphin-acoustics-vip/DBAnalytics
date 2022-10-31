@@ -17,6 +17,8 @@ public class SQLiteStorageSystem implements IStorageSystem {
     private int blobSize;
     private long previousInsertionTime;
 
+    private Connection storageConn;
+
     /**
      * Constrctor for making a whole storage system.
      * Only need one SQLite database, and put files into there.
@@ -51,17 +53,15 @@ public class SQLiteStorageSystem implements IStorageSystem {
      * This will populate the SQLite database with however many data rows.
      */
     public void populate(int rows) {
-
-        // Turn off autocommit and loop through to populate the table
-
-        Connection conn;
         previousInsertionTime = 0;
         try {
-            conn = DriverManager.getConnection(databaseURL);
+            storageConn = DriverManager.getConnection(databaseURL);
+            storageConn.setAutoCommit(false);
             for (int i = 0; i < rows; i++) {
                 reportAnalysis();
             }
-            conn.setAutoCommit(false);
+            storageConn.commit();
+            storageConn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,18 +74,13 @@ public class SQLiteStorageSystem implements IStorageSystem {
      */
     @Override
     public void store(byte[] data) {
-
-        Connection connection;
-
         try {
-            connection = DriverManager.getConnection(databaseURL);
-
             // Put in the different values from the random data point object.
             CreateRandomData randomDataPoint = new CreateRandomData(blobSize);
             StringBuilder sb = new StringBuilder();
             sb.append(
                     "INSERT INTO RandomData (time_recorded, ship_id, data, duration, channel_recorded) VALUES (?, ?, ?, ?, ?)");
-            PreparedStatement insertDataRowCommand = connection.prepareStatement(sb.toString());
+            PreparedStatement insertDataRowCommand = storageConn.prepareStatement(sb.toString());
 
             insertDataRowCommand.setString(1, String.valueOf(randomDataPoint.getDateRecorded())); // time recorded
             insertDataRowCommand.setString(2, String.valueOf(randomDataPoint.getShipName())); // ship id
@@ -97,8 +92,6 @@ public class SQLiteStorageSystem implements IStorageSystem {
             insertDataRowCommand.execute();
 
             // TODO turn off autocommit and have one overarching connection
-
-            connection.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

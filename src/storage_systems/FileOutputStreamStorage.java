@@ -51,7 +51,7 @@ public class FileOutputStreamStorage implements IStorageSystem {
     public void prepareStorage() {
 
         fileName = "fileStorageSystem.txt";
-        File storage = new File(fileName);
+        storage = new File(fileName);
         try {
             storage.createNewFile();
             reportAnalysis();
