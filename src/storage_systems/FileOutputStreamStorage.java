@@ -9,11 +9,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
-import javax.swing.text.DateFormatter;
 
 import src.CreateRandomData;
 
@@ -95,7 +92,7 @@ public class FileOutputStreamStorage implements IStorageSystem {
                 LocalDateTime end_time = LocalDateTime.now();
                 Duration d = Duration.between(start_time, end_time);
 
-
+                // Creating a prepared statement to insert the speed of how long it took to call the store method with the provided random block of date.
                 String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration, blobSize) VALUES (?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
@@ -108,6 +105,7 @@ public class FileOutputStreamStorage implements IStorageSystem {
 
                 speedOfInsert.execute();
             }
+            // After adding all the blocks to the file, close the connection to the SQLite database of write speeds (after committing all operations).
             conn.commit();
             conn.close();
         } catch (SQLException e) {

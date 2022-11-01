@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -50,6 +49,9 @@ public class SQLiteStorageSystem implements IStorageSystem {
      */
     public void populate(int rows) {
         try {
+            // Making two connections, one to the storage database itself, and one for the
+            // database containing the insert speeds of the different callings of the store
+            // method.
             storageConn = DriverManager.getConnection(databaseURL);
             speedConn = DriverManager.getConnection(speedsURL);
             speedConn.setAutoCommit(false);
@@ -86,7 +88,8 @@ public class SQLiteStorageSystem implements IStorageSystem {
             PreparedStatement insertDataRowCommand = storageConn.prepareStatement(sb.toString());
 
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            insertDataRowCommand.setString(1, String.valueOf(df.format(randomDataPoint.getDateRecorded()))); // time recorded
+            insertDataRowCommand.setString(1, String.valueOf(df.format(randomDataPoint.getDateRecorded()))); // time
+                                                                                                             // recorded
             insertDataRowCommand.setString(2, String.valueOf(randomDataPoint.getShipName())); // ship id
             insertDataRowCommand.setBytes(3, randomDataPoint.getWaveformData()); // waveform data
             insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
