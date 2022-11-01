@@ -119,22 +119,4 @@ public class CreateRandomData {
         }
 
     }
-
-    /**
-     * 
-     * @return The path of the data file.
-     */
-    public String makeFile() {
-
-        /**
-         * - CHANNEL RECORDED ON
-         * - SHIP RECORDED ON (NULL OTHERWISSE)
-         * - DATE RECORDED
-         * - TIME RECORDED
-         * - LENGTH RECORDED
-         */
-
-        return "";
-    }
-
 }

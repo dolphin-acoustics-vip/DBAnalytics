@@ -34,7 +34,6 @@ public class CreateSQLiteDatabase {
 
         try {
             if (database.createNewFile()) {
-                System.out.println("Made file");
             } else if (database.delete()) {
                 // This is done to delete any previous instances of the database to create a
                 // wholly new one.
@@ -52,7 +51,6 @@ public class CreateSQLiteDatabase {
     private void checkConnection() {
         Connection conn = makeConnection();
         if (conn != null) {
-            System.out.println("Able to connect to database.");
         } else {
             System.out.println("Cannot connect to database.");
         }
@@ -105,6 +103,17 @@ public class CreateSQLiteDatabase {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * This is called after a whole set of data stored.
+     */
+    public void deleteDB(String dbName) {
+        File database = new File(dbName + ".db");
+        if (database.delete()) {
+        } else {
+            System.out.println("Clean up failed.");
+        }
     }
 
 }

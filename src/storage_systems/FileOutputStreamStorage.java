@@ -34,22 +34,17 @@ public class FileOutputStreamStorage implements IStorageSystem {
     private File storage;
     private String fileName;
 
-    public FileOutputStreamStorage(int b, int bs) {
-        blobSize = bs;
-        blocks = b;
-
+    public FileOutputStreamStorage(int numberOfBlocks, int sizeOfBlob) {
+        blobSize = sizeOfBlob;
+        blocks = numberOfBlocks;
         speedsURL = "jdbc:sqlite:speedsOfFileOutputDatabase.db";
-        File script = new File("scripts/databaseAnalysis.txt");
-        new CreateSQLiteDatabase("speedsOfFileOutputDatabase", script);
 
         prepareStorage();
-
         closeStorage();
     }
 
     @Override
     public void prepareStorage() {
-
         fileName = "fileStorageSystem.txt";
         storage = new File(fileName);
         try {
@@ -58,12 +53,10 @@ public class FileOutputStreamStorage implements IStorageSystem {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void store(byte[] data) {
-
         try {
             FileOutputStream fStream = new FileOutputStream(fileName, true);
             fStream.write(data);
@@ -74,23 +67,20 @@ public class FileOutputStreamStorage implements IStorageSystem {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void closeStorage() {
         storage.delete();
-
     }
 
     @Override
     public void reportAnalysis() {
-
-        for (int i = 0; i < blocks; i++) {
-            Connection conn = null;
-
-            try {
-                conn = DriverManager.getConnection(speedsURL);
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(speedsURL);
+            conn.setAutoCommit(false);
+            for (int i = 0; i < blocks; i++) {
 
                 CreateRandomData rd = new CreateRandomData(blobSize);
                 byte[] data = rd.getWaveformData();
@@ -101,7 +91,7 @@ public class FileOutputStreamStorage implements IStorageSystem {
 
                 Duration duration = Duration.between(s, e);
 
-                String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration) VALUES (?, ?, ?, ?, ?)";
+                String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration, blobSize) VALUES (?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
                 speedOfInsert.setString(1, "FileOutputStream");
@@ -109,13 +99,15 @@ public class FileOutputStreamStorage implements IStorageSystem {
                 speedOfInsert.setString(3, String.valueOf(e));
                 speedOfInsert.setString(4, "Inserting");
                 speedOfInsert.setString(5, String.valueOf(duration));
+                speedOfInsert.setInt(6, blobSize);
 
                 speedOfInsert.execute();
 
-                conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+            conn.commit();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
