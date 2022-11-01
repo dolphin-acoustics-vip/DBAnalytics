@@ -57,7 +57,6 @@ public class CreateSQLiteDatabase {
         try {
             conn.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -99,7 +98,6 @@ public class CreateSQLiteDatabase {
         try {
             return DriverManager.getConnection(databaseURL);
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;

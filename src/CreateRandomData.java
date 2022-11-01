@@ -102,7 +102,7 @@ public class CreateRandomData {
         int randomMin = rand.nextInt(60);
         int randomSec = rand.nextInt(60);
         int randomNanoSec = rand.nextInt(1000);
-        LocalDateTime randomStartTime = randomDate.atTime(randomHour, randomMin, randomSec, randomNanoSec);
+        LocalDateTime randomStartTime = randomDate.atTime(randomHour, randomMin, randomSec);
 
         setDateRecorded(randomStartTime);
 

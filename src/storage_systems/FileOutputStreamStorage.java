@@ -10,9 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import javax.swing.text.DateFormatter;
 
 import src.CreateRandomData;
-import src.CreateSQLiteDatabase;
 
 /**
  * Testing how fast it is to read data that was written directly with
@@ -49,6 +52,7 @@ public class FileOutputStreamStorage implements IStorageSystem {
         storage = new File(fileName);
         try {
             storage.createNewFile();
+            // Storing blocks of data and storing the speeds in the relevant database
             reportAnalysis();
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +64,6 @@ public class FileOutputStreamStorage implements IStorageSystem {
         try {
             FileOutputStream fStream = new FileOutputStream(fileName, true);
             fStream.write(data);
-            fStream.write("/n".getBytes());
             fStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -85,24 +88,25 @@ public class FileOutputStreamStorage implements IStorageSystem {
                 CreateRandomData rd = new CreateRandomData(blobSize);
                 byte[] data = rd.getWaveformData();
 
-                Instant s = Instant.now();
+                // Getting the time it takes to insert one block of 'waveform' data into the file.
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime start_time = LocalDateTime.now();
                 store(data);
-                Instant e = Instant.now();
+                LocalDateTime end_time = LocalDateTime.now();
+                Duration d = Duration.between(start_time, end_time);
 
-                Duration duration = Duration.between(s, e);
 
                 String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration, blobSize) VALUES (?, ?, ?, ?, ?, ?)";
 
                 PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
                 speedOfInsert.setString(1, "FileOutputStream");
-                speedOfInsert.setString(2, String.valueOf(s));
-                speedOfInsert.setString(3, String.valueOf(e));
+                speedOfInsert.setString(2, String.valueOf(df.format(start_time)));
+                speedOfInsert.setString(3, String.valueOf(df.format(end_time)));
                 speedOfInsert.setString(4, "Inserting");
-                speedOfInsert.setString(5, String.valueOf(duration));
+                speedOfInsert.setString(5, String.valueOf(d));
                 speedOfInsert.setInt(6, blobSize);
 
                 speedOfInsert.execute();
-
             }
             conn.commit();
             conn.close();

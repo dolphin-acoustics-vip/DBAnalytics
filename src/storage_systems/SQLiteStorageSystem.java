@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import src.CreateRandomData;
 import src.CreateSQLiteDatabase;
@@ -52,9 +54,11 @@ public class SQLiteStorageSystem implements IStorageSystem {
             speedConn = DriverManager.getConnection(speedsURL);
             speedConn.setAutoCommit(false);
             storageConn.setAutoCommit(false);
+
             for (int i = 0; i < rows; i++) {
                 reportAnalysis();
             }
+
             storageConn.commit();
             storageConn.close();
             speedConn.commit();
@@ -81,7 +85,8 @@ public class SQLiteStorageSystem implements IStorageSystem {
             // Using the global connection to the storage database.
             PreparedStatement insertDataRowCommand = storageConn.prepareStatement(sb.toString());
 
-            insertDataRowCommand.setString(1, String.valueOf(randomDataPoint.getDateRecorded())); // time recorded
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            insertDataRowCommand.setString(1, String.valueOf(df.format(randomDataPoint.getDateRecorded()))); // time recorded
             insertDataRowCommand.setString(2, String.valueOf(randomDataPoint.getShipName())); // ship id
             insertDataRowCommand.setBytes(3, randomDataPoint.getWaveformData()); // waveform data
             insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
@@ -115,20 +120,21 @@ public class SQLiteStorageSystem implements IStorageSystem {
     @Override
     public void reportAnalysis() {
         try {
-            Instant s = Instant.now();
+            // Getting the time it takes to insert one row into the SQLite database.
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime start_time = LocalDateTime.now();
             store(null);
-            Instant e = Instant.now();
-
-            Duration duration = Duration.between(s, e);
+            LocalDateTime end_time = LocalDateTime.now();
+            Duration d = Duration.between(start_time, end_time);
 
             String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration, blobSize) VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement speedOfInsert = speedConn.prepareStatement(insertIntoSpeeds);
             speedOfInsert.setString(1, "SQLite");
-            speedOfInsert.setString(2, String.valueOf(s));
-            speedOfInsert.setString(3, String.valueOf(e));
+            speedOfInsert.setString(2, String.valueOf(df.format(start_time)));
+            speedOfInsert.setString(3, String.valueOf(df.format(end_time)));
             speedOfInsert.setString(4, "Inserting");
-            speedOfInsert.setString(5, String.valueOf(duration));
+            speedOfInsert.setString(5, String.valueOf(d));
             speedOfInsert.setInt(6, blobSize);
 
             speedOfInsert.execute();
