@@ -35,28 +35,23 @@ public class PopulateSystem {
             CreateRandomData randomDataPoint = new CreateRandomData(blobSize);
 
             // Get time of this process.
-            long startSQL = System.currentTimeMillis();
-            System.out.println("start = " + startSQL);
+            long startSQL = System.nanoTime();
             sql.store(randomDataPoint, SQLDatabaseConn);
-            long endSQL = System.currentTimeMillis();
-            System.out.println("end   = " + endSQL);
+            long endSQL = System.nanoTime();
             long durationSQL = Math.subtractExact(endSQL, startSQL);
 
             insertSpeed(speedsOfSQLConnection, "SQL", "Insertion", durationSQL);
 
             // Get time of this process.
-            long startFOS = System.currentTimeMillis();
+            long startFOS = System.nanoTime();
             fos.store(randomDataPoint);
-            long endFOS = System.currentTimeMillis();
+            long endFOS = System.nanoTime();
             long durationFOS = endFOS - startFOS;
 
             insertSpeed(speedsOfFileOutpuConnection, "FOS", "Insertion", durationFOS);
         }
 
-        System.out.println("commit time start = " + System.currentTimeMillis());
         speedsOfFileOutpuConnection.commit();
-        System.out.println("commit time end = " + System.currentTimeMillis());
-
         speedsOfFileOutpuConnection.close();
 
         speedsOfSQLConnection.commit();
@@ -72,16 +67,16 @@ public class PopulateSystem {
 
     private void insertSpeed(Connection speedConn, String dbType, String operation, long d) {
         try {
-            String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, type_of_statement, duration, blobSize, numberOfInsertions) VALUES (?, ?, ?, ?, ?)";
+            String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, type_of_statement, blobSize, numberOfInsertions, duration) VALUES (?, ?, ?, ?, ?)";
 
             PreparedStatement speedOfInsert = speedConn.prepareStatement(insertIntoSpeeds);
 
             // Setting parameter values.
-            speedOfInsert.setString(1, "SQLite");
-            speedOfInsert.setString(2, "Inserting");
-            speedOfInsert.setString(3, String.valueOf(d));
-            speedOfInsert.setInt(4, blobSize);
-            speedOfInsert.setInt(5, insertions);
+            speedOfInsert.setString(1, dbType);
+            speedOfInsert.setString(2, operation);
+            speedOfInsert.setInt(3, blobSize);
+            speedOfInsert.setInt(4, insertions);
+            speedOfInsert.setString(5, String.valueOf(Math.floorDiv(d, 100)));
 
             speedOfInsert.execute();
         } catch (SQLException e) {

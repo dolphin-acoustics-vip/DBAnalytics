@@ -14,30 +14,20 @@ public class Main {
         new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
 
         System.out.println("Made speeds databases.");
-        System.out.println("=====");
-
         
         int [] numberOfInsertions = new int[] {100, 1000, 10000, 100000};
         int [] blobSizes = new int[] {50, 100, 500, 1000};
 
-        try {
-            new PopulateSystem(5, 1000);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        /*
         for (int i = 0; i < numberOfInsertions.length; i++) {
             for (int j = 0; j < blobSizes.length; j++) {
                 try {
-                    //new PopulateSystem(numberOfInsertions[i], blobSizes[j]);
-                    new PopulateSystem(i, j);
+                    new PopulateSystem(numberOfInsertions[i], blobSizes[j]);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
         }
-        */
+        
 
         /**
          * 8 * 50 = 400 bytes = 0.4kb

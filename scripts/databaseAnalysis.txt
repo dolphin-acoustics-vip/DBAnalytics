@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS speeds;
 CREATE TABLE speeds (
     type_of_db TEXT,
     type_of_statement TEXT,
-    duration TEXT,
     blobSize INT, 
-    numberOfInsertions INT
+    numberOfInsertions INT,
+    duration TEXT
 );
