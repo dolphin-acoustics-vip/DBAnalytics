@@ -1,9 +1,9 @@
 package src;
 
 import java.io.File;
+import java.sql.SQLException;
 
-import src.storage_systems.FileOutputStreamStorage;
-import src.storage_systems.SQLiteStorageSystem;
+import src.storage_systems.PopulateSystem;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,6 +19,26 @@ public class Main {
         
         int [] numberOfInsertions = new int[] {100, 1000, 10000, 100000};
         int [] blobSizes = new int[] {50, 100, 500, 1000};
+
+        try {
+            new PopulateSystem(5, 1000);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        for (int i = 0; i < numberOfInsertions.length; i++) {
+            for (int j = 0; j < blobSizes.length; j++) {
+                try {
+                    //new PopulateSystem(numberOfInsertions[i], blobSizes[j]);
+                    new PopulateSystem(i, j);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        */
+
         /**
          * 8 * 50 = 400 bytes = 0.4kb
          *      - 40 kb
@@ -44,16 +64,7 @@ public class Main {
          * Total of over 1333mb = 1.33 GB (So I do need to clean it right after each - also explains why it's so long with a higher number of insertions)
          */
 
-        for (int insertion = 0; insertion < numberOfInsertions.length; insertion++) {
-            for (int blobSize = 0; blobSize < blobSizes.length; blobSize++) {
-                System.out.println("Number of Insertions = " + numberOfInsertions[insertion]);
-                System.out.println("Blob Size being inserted = " + blobSizes[blobSize]); 
-                new SQLiteStorageSystem("SQLiteStorageSystem", numberOfInsertions[insertion], blobSizes[blobSize]);
-                new FileOutputStreamStorage(numberOfInsertions[insertion], blobSizes[blobSize]);
-                System.out.println("Done");
-                System.out.println("");
-            }
-        }
+        
         
 
     }

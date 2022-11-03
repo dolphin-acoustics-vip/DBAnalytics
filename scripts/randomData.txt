@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS randomData;
 #
 CREATE TABLE randomData (
-    time_recorded TIMESTAMP PRIMARY KEY, 
+    time_recorded TIMESTAMP, 
     ship_id TEXT, 
     data BLOB, 
     duration TEXT, 

@@ -4,13 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import src.CreateRandomData;
 
@@ -27,41 +20,40 @@ import src.CreateRandomData;
  * 
  * blocks of data in one file
  */
-public class FileOutputStreamStorage implements IStorageSystem {
+public class FileOutputStreamStorage {
 
-    private String speedsURL;
-    private int blobSize, blocks;
     private File storage;
     private String fileName;
+    private FileOutputStream fStream;
 
-    public FileOutputStreamStorage(int numberOfBlocks, int sizeOfBlob) {
-        blobSize = sizeOfBlob;
-        blocks = numberOfBlocks;
-        speedsURL = "jdbc:sqlite:speedsOfFileOutputDatabase.db";
-
+    public FileOutputStreamStorage() {
         prepareStorage();
-        closeStorage();
     }
 
-    @Override
-    public void prepareStorage() {
+    private void prepareStorage() {
+
+        // Creating file for file storage system.
         fileName = "fileStorageSystem.txt";
         storage = new File(fileName);
         try {
             storage.createNewFile();
-            // Storing blocks of data and storing the speeds in the relevant database
-            reportAnalysis();
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // Creating an associated FileOutputStream
+        try {
+            fStream = new FileOutputStream(fileName, true);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void store(byte[] data) {
+    public void store(CreateRandomData randomDataPoint) {
         try {
-            FileOutputStream fStream = new FileOutputStream(fileName, true);
-            fStream.write(data);
-            fStream.close();
+            //FileOutputStream fStream = new FileOutputStream(fileName, true);
+            fStream.write(randomDataPoint.getWaveformData());
+            //fStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -69,49 +61,13 @@ public class FileOutputStreamStorage implements IStorageSystem {
         }
     }
 
-    @Override
     public void closeStorage() {
-        storage.delete();
-    }
-
-    @Override
-    public void reportAnalysis() {
-        Connection conn = null;
         try {
-            conn = DriverManager.getConnection(speedsURL);
-            conn.setAutoCommit(false);
-            for (int i = 0; i < blocks; i++) {
-
-                CreateRandomData rd = new CreateRandomData(blobSize);
-                byte[] data = rd.getWaveformData();
-
-                // Getting the time it takes to insert one block of 'waveform' data into the file.
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime start_time = LocalDateTime.now();
-                store(data);
-                LocalDateTime end_time = LocalDateTime.now();
-                Duration d = Duration.between(start_time, end_time);
-
-                // Creating a prepared statement to insert the speed of how long it took to call the store method with the provided random block of date.
-                String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration, blobSize) VALUES (?, ?, ?, ?, ?, ?)";
-
-                PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
-                speedOfInsert.setString(1, "FileOutputStream");
-                speedOfInsert.setString(2, String.valueOf(df.format(start_time)));
-                speedOfInsert.setString(3, String.valueOf(df.format(end_time)));
-                speedOfInsert.setString(4, "Inserting");
-                speedOfInsert.setString(5, String.valueOf(d));
-                speedOfInsert.setInt(6, blobSize);
-
-                speedOfInsert.execute();
-            }
-            // After adding all the blocks to the file, close the connection to the SQLite database of write speeds (after committing all operations).
-            conn.commit();
-            conn.close();
-        } catch (SQLException e) {
+            fStream.close();
+        } catch (IOException e) {
             e.printStackTrace();
         }
-
+        storage.delete();
     }
 
 }
