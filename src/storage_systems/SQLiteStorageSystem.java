@@ -6,7 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import src.CreateRandomData;
 import src.CreateSQLiteDatabase;
@@ -15,9 +16,7 @@ public class SQLiteStorageSystem implements IStorageSystem {
 
     private String databaseName, databaseURL, speedsURL;
     private int blobSize;
-    private long previousInsertionTime;
-
-    private Connection storageConn;
+    private Connection storageConn, speedConn;
 
     /**
      * Constrctor for making a whole storage system.
@@ -25,8 +24,6 @@ public class SQLiteStorageSystem implements IStorageSystem {
      */
     public SQLiteStorageSystem(String dbName, int rows, int bSize) {
         speedsURL = "jdbc:sqlite:speedsOfSQLDatabase.db";
-        File script = new File("scripts/databaseAnalysis.txt");
-        new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
 
         blobSize = bSize;
         databaseName = dbName;
@@ -43,25 +40,31 @@ public class SQLiteStorageSystem implements IStorageSystem {
      */
     @Override
     public void prepareStorage() {
-
         File script = new File("scripts/randomData.txt");
         new CreateSQLiteDatabase(databaseName, script);
-
     }
 
     /**
      * This will populate the SQLite database with however many data rows.
      */
     public void populate(int rows) {
-        previousInsertionTime = 0;
         try {
+            // Making two connections, one to the storage database itself, and one for the
+            // database containing the insert speeds of the different callings of the store
+            // method.
             storageConn = DriverManager.getConnection(databaseURL);
+            speedConn = DriverManager.getConnection(speedsURL);
+            speedConn.setAutoCommit(false);
             storageConn.setAutoCommit(false);
+
             for (int i = 0; i < rows; i++) {
                 reportAnalysis();
             }
+
             storageConn.commit();
             storageConn.close();
+            speedConn.commit();
+            speedConn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -80,19 +83,19 @@ public class SQLiteStorageSystem implements IStorageSystem {
             StringBuilder sb = new StringBuilder();
             sb.append(
                     "INSERT INTO RandomData (time_recorded, ship_id, data, duration, channel_recorded) VALUES (?, ?, ?, ?, ?)");
+
+            // Using the global connection to the storage database.
             PreparedStatement insertDataRowCommand = storageConn.prepareStatement(sb.toString());
 
-            insertDataRowCommand.setString(1, String.valueOf(randomDataPoint.getDateRecorded())); // time recorded
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            insertDataRowCommand.setString(1, String.valueOf(df.format(randomDataPoint.getDateRecorded()))); // time
+                                                                                                             // recorded
             insertDataRowCommand.setString(2, String.valueOf(randomDataPoint.getShipName())); // ship id
             insertDataRowCommand.setBytes(3, randomDataPoint.getWaveformData()); // waveform data
             insertDataRowCommand.setString(4, String.valueOf(randomDataPoint.getDurationOfWaveformSound())); // duration
             insertDataRowCommand.setString(5, String.valueOf(randomDataPoint.getChannel())); // channel recorded
-            // insertDataRowCommand.setLong(6, previousInsertionTime);
 
             insertDataRowCommand.execute();
-
-            // TODO turn off autocommit and have one overarching connection
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,7 +111,6 @@ public class SQLiteStorageSystem implements IStorageSystem {
     public void closeStorage() {
         File database = new File(databaseName + ".db");
         if (database.delete()) {
-            System.out.println("Clean up complete.");
         } else {
             System.out.println("Clean up failed.");
         }
@@ -120,29 +122,25 @@ public class SQLiteStorageSystem implements IStorageSystem {
      */
     @Override
     public void reportAnalysis() {
-        Connection conn = null;
-
         try {
-            conn = DriverManager.getConnection(speedsURL);
-
-            Instant s = Instant.now();
+            // Getting the time it takes to insert one row into the SQLite database.
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime start_time = LocalDateTime.now();
             store(null);
-            Instant e = Instant.now();
+            LocalDateTime end_time = LocalDateTime.now();
+            Duration d = Duration.between(start_time, end_time);
 
-            Duration duration = Duration.between(s, e);
+            String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration, blobSize) VALUES (?, ?, ?, ?, ?, ?)";
 
-            String insertIntoSpeeds = "INSERT INTO speeds (type_of_db, start_time, end_time, type_of_statement, duration) VALUES (?, ?, ?, ?, ?)";
-
-            PreparedStatement speedOfInsert = conn.prepareStatement(insertIntoSpeeds);
+            PreparedStatement speedOfInsert = speedConn.prepareStatement(insertIntoSpeeds);
             speedOfInsert.setString(1, "SQLite");
-            speedOfInsert.setString(2, String.valueOf(s));
-            speedOfInsert.setString(3, String.valueOf(e));
+            speedOfInsert.setString(2, String.valueOf(df.format(start_time)));
+            speedOfInsert.setString(3, String.valueOf(df.format(end_time)));
             speedOfInsert.setString(4, "Inserting");
-            speedOfInsert.setString(5, String.valueOf(duration));
+            speedOfInsert.setString(5, String.valueOf(d));
+            speedOfInsert.setInt(6, blobSize);
 
             speedOfInsert.execute();
-
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
