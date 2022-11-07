@@ -1,9 +1,11 @@
 package src.storage_systems;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import src.CreateRandomData;
 
@@ -40,7 +42,7 @@ public class FileOutputStreamStorage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         // Creating an associated FileOutputStream
         try {
             fStream = new FileOutputStream(fileName, true);
@@ -51,14 +53,31 @@ public class FileOutputStreamStorage {
 
     public void store(CreateRandomData randomDataPoint) {
         try {
-            //FileOutputStream fStream = new FileOutputStream(fileName, true);
+            fStream.write(convertToByteArray(randomDataPoint.getDateRecorded()));
+            fStream.write(convertToByteArray(randomDataPoint.getShipName()));
             fStream.write(randomDataPoint.getWaveformData());
-            //fStream.close();
+            fStream.write(convertToByteArray(randomDataPoint.getDurationOfWaveformSound()));
+            fStream.write(convertToByteArray(randomDataPoint.getChannel()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public byte[] convertToByteArray(Object toConvert) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream os;
+        try {
+            os = new ObjectOutputStream(bos);
+            os.writeObject(toConvert);
+            os.flush();
+            return bos.toByteArray();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+
+        return null;
     }
 
     public void closeStorage() {
