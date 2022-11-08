@@ -1,5 +1,8 @@
 package src.storage_systems;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,7 +15,7 @@ public class PopulateSystem {
     private int blobSize, insertions;
     private Connection speedsOfSQLConnection, speedsOfFileOutpuConnection;
 
-    public PopulateSystem(int i, int bS) throws SQLException {
+    public PopulateSystem(int i, int bS, File storageSizes) throws SQLException {
         insertions = i;
         blobSize = bS;
 
@@ -60,9 +63,24 @@ public class PopulateSystem {
         SQLDatabaseConn.commit();
         SQLDatabaseConn.close();
 
+        FileWriter fw;
+
         // Closing all connections and storage systems.
         sql.closeStorage();
+        System.out.println("SQL Size = " + sql.getFileSize());
         fos.closeStorage();
+        System.out.println("FOS Size = " + fos.getFileSize());
+
+        try {
+            fw = new FileWriter(storageSizes);
+            fw.append("Insertions = " + insertions + "  Blob Size = " + blobSize);
+            fw.append("SQL Size = " + sql.getFileSize());
+            fw.append("FOS Size = " + fos.getFileSize());
+            fw.append("/n");
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     private void insertSpeed(Connection speedConn, String dbType, String operation, long d) {

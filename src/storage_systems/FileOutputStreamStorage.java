@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import src.CreateRandomData;
 
@@ -27,13 +29,13 @@ public class FileOutputStreamStorage {
     private File storage;
     private String fileName;
     private FileOutputStream fStream;
+    private long fileSize;
 
     public FileOutputStreamStorage() {
         prepareStorage();
     }
 
     private void prepareStorage() {
-
         // Creating file for file storage system.
         fileName = "fileStorageSystem.txt";
         storage = new File(fileName);
@@ -65,7 +67,7 @@ public class FileOutputStreamStorage {
         }
     }
 
-    public byte[] convertToByteArray(Object toConvert) {
+    private byte[] convertToByteArray(Object toConvert) {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ObjectOutputStream os;
         try {
@@ -86,7 +88,17 @@ public class FileOutputStreamStorage {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        storage.delete();
+        
+        try {
+            fileSize = Files.size(Paths.get(storage.getAbsolutePath()));
+            storage.delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public long getFileSize() {
+        return fileSize;
     }
 
 }

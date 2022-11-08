@@ -1,6 +1,8 @@
 package src.storage_systems;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,6 +14,7 @@ import src.CreateSQLiteDatabase;
 public class SQLiteStorageSystem {
 
     private String databaseName;
+    private long fileSize;
 
     /**
      * Constrctor for making a whole storage system.
@@ -71,10 +74,20 @@ public class SQLiteStorageSystem {
      */
     public void closeStorage() {
         File database = new File(databaseName + ".db");
+        // Get the size of this database.
+        try {
+            fileSize = Files.size(Paths.get(database.getAbsolutePath()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (database.delete()) {
         } else {
             System.out.println("Clean up failed.");
         }
+    }
+
+    public long getFileSize() {
+        return fileSize;
     }
 
 }

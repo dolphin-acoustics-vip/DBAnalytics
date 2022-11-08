@@ -10,13 +10,15 @@ public class Main {
 
         // Blob size, i'm assuming, will be the biggest factor in time differences between these two data storage systems, the metadato in the SQLDatabase would be the same for any blob size.
         File script = new File("scripts/databaseAnalysis.txt");
-        new CreateSQLiteDatabase("speedsOfFileOutputDatabase", script);
-        new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
+        new CreateSQLiteDatabase("speeds/speedsOfFileOutputDatabase", script);
+        new CreateSQLiteDatabase("speeds/speedsOfSQLDatabase", script);
+
+        File sizes = new File("speeds/databaseSizes.txt");
 
         System.out.println("Made speeds databases.");
         
         int [] numberOfInsertions = new int[] {100, 1000, 10000, 100000};
-        int [] blobSizes = new int[] {50, 100, 500, 1000};
+        int [] blobSizes = new int[] {50, 100, 500, 1000, 10000};
 
         for (int i = 0; i < numberOfInsertions.length; i++) {
             for (int j = 0; j < blobSizes.length; j++) {
