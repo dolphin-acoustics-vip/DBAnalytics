@@ -1,6 +1,7 @@
 package src;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
 import src.storage_systems.PopulateSystem;
@@ -10,10 +11,18 @@ public class Main {
 
         // Blob size, i'm assuming, will be the biggest factor in time differences between these two data storage systems, the metadato in the SQLDatabase would be the same for any blob size.
         File script = new File("scripts/databaseAnalysis.txt");
-        new CreateSQLiteDatabase("speeds/speedsOfFileOutputDatabase", script);
-        new CreateSQLiteDatabase("speeds/speedsOfSQLDatabase", script);
+        new CreateSQLiteDatabase("speedsOfFileOutputDatabase", script);
+        new CreateSQLiteDatabase("speedsOfSQLDatabase", script);
 
-        File sizes = new File("speeds/databaseSizes.txt");
+        File sizes = new File("databaseSizes.txt");
+        if (sizes.delete()) {
+        } else {
+            try {
+                sizes.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         System.out.println("Made speeds databases.");
         
@@ -23,7 +32,7 @@ public class Main {
         for (int i = 0; i < numberOfInsertions.length; i++) {
             for (int j = 0; j < blobSizes.length; j++) {
                 try {
-                    new PopulateSystem(numberOfInsertions[i], blobSizes[j]);
+                    new PopulateSystem(numberOfInsertions[i], blobSizes[j], sizes);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }

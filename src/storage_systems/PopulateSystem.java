@@ -72,13 +72,13 @@ public class PopulateSystem {
         System.out.println("FOS Size = " + fos.getFileSize());
 
         try {
-            fw = new FileWriter(storageSizes);
-            fw.append("Insertions = " + insertions + "  Blob Size = " + blobSize);
-            fw.append("SQL Size = " + sql.getFileSize());
-            fw.append("FOS Size = " + fos.getFileSize());
-            fw.append("/n");
+            fw = new FileWriter(storageSizes, true);
+            fw.write("Insertions = " + insertions + "  Blob Size = " + blobSize);
+            fw.write("SQL Size = " + sql.getFileSize());
+            fw.write("  FOS Size = " + fos.getFileSize());
+            fw.write(System.lineSeparator());
+            fw.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

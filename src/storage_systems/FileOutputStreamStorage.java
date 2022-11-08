@@ -91,7 +91,8 @@ public class FileOutputStreamStorage {
         
         try {
             fileSize = Files.size(Paths.get(storage.getAbsolutePath()));
-            storage.delete();
+            if (storage.delete()) {
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
