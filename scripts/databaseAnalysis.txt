@@ -5,5 +5,5 @@ CREATE TABLE speeds (
     type_of_statement TEXT,
     blobSize INT, 
     numberOfInsertions INT,
-    duration TEXT
+    duration REAL
 );

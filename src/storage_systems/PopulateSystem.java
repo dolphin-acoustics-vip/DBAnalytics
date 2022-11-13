@@ -67,9 +67,7 @@ public class PopulateSystem {
 
         // Closing all connections and storage systems.
         sql.closeStorage();
-        System.out.println("SQL Size = " + sql.getFileSize());
         fos.closeStorage();
-        System.out.println("FOS Size = " + fos.getFileSize());
 
         try {
             fw = new FileWriter(storageSizes, true);
@@ -94,7 +92,8 @@ public class PopulateSystem {
             speedOfInsert.setString(2, operation);
             speedOfInsert.setInt(3, blobSize);
             speedOfInsert.setInt(4, insertions);
-            speedOfInsert.setString(5, String.valueOf(Math.floorDiv(d, 100)));
+            // speedOfInsert.setString(5, String.valueOf(Math.floorDiv(d, 100)));
+            speedOfInsert.setFloat(5, d);
 
             speedOfInsert.execute();
         } catch (SQLException e) {
