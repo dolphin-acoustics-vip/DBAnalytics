@@ -14,13 +14,15 @@ public class Main {
         int[] numberOfInsertions = new int[] { 100, 1000, 10000, 100000 };
         int[] blobSizes = new int[] { 50, 100, 500, 1000, 10000 };
 
-        
+        /*
         try {
             new AnalyseData(numberOfInsertions, blobSizes);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
+        */
 
 
     }
